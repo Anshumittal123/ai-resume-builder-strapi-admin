@@ -1,9 +1,53 @@
+// 'use strict';
+
+// /**
+//  * user-resume router
+//  */
+
+// const { createCoreRouter } = require('@strapi/strapi').factories;
+
+// module.exports = createCoreRouter('api::user-resume.user-resume');
+
+
 'use strict';
 
-/**
- * user-resume router
- */
+module.exports = {
+  routes: [
+    {
+      method: 'POST',
+      path: '/filter-resumes',
+      handler: 'user-resume.filterResumes',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+    {
+      method: 'GET',
+      path: '/user-resumes',
+      handler: 'user-resume.find',
+    },
+    {
+      method: 'GET',
+      path: '/user-resumes/:id',
+      handler: 'user-resume.findOne',
+    },
+    {
+      method: 'POST',
+      path: '/user-resumes',
+      handler: 'user-resume.create',
+    },
+    {
+      method: 'PUT',
+      path: '/user-resumes/:id',
+      handler: 'user-resume.update',
+    },
+    {
+      method: 'DELETE',
+      path: '/user-resumes/:id',
+      handler: 'user-resume.delete',
+    }
+  ],
+};
 
-module.exports = createCoreRouter('api::user-resume.user-resume');
