@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const pdfParse = require('pdf-parse');
+const mammoth = require('mammoth'); //
 const { AIChatSession } = require('../../../utils/AIModal.js');
 const { createCoreController } = require('@strapi/strapi').factories;
 
@@ -29,16 +30,31 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
 
     try {
       const resumeFolder = path.join(__dirname, '../../../../public/resumes');
-      const files = fs.readdirSync(resumeFolder).filter(f => f.endsWith('.pdf'));
+      const files = fs.readdirSync(resumeFolder).filter(f => f.endsWith('.pdf') || f.endsWith('.doc') || f.endsWith('.docx')); //
 
       const matchedResumes = [];
 
       for (let file of files) {
-        const filePath = path.join(resumeFolder, file);
-        const dataBuffer = fs.readFileSync(filePath);
-        const pdfText = await pdfParse(dataBuffer);
+        // const filePath = path.join(resumeFolder, file);
+        // const dataBuffer = fs.readFileSync(filePath);
+        // const pdfText = await pdfParse(dataBuffer);
 
-        const prompt = `Does this resume match the keyword "${keyword}"? Answer only YES or NO.\n\nResume Content:\n${pdfText.text}`;
+        const filePath = path.join(resumeFolder, file);
+        let resumeText = '';
+
+        if (file.endsWith('.pdf')) {
+          const dataBuffer = fs.readFileSync(filePath);
+          const pdfData = await pdfParse(dataBuffer);
+          resumeText = pdfData.text;
+        } else if (file.endsWith('.docx')) {
+          const result = await mammoth.extractRawText({ path: filePath });
+          resumeText = result.value;
+        } else {
+          console.warn(`Unsupported file format for: ${file}`);
+          continue;
+        }
+
+        const prompt = `Does this resume match the keyword "${keyword}"? Answer only YES or NO.\n\nResume Content:\n${resumeText}`;
         console.log(prompt);
 
         const result = await AIChatSession.sendMessage(prompt);
