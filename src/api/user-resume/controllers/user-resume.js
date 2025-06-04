@@ -1,14 +1,3 @@
-// 'use strict';
-
-// /**
-//  * user-resume controller
-//  */
-
-// const { createCoreController } = require('@strapi/strapi').factories;
-
-// module.exports = createCoreController('api::user-resume.user-resume');
-
-
 'use strict';
 
 const fs = require('fs');
@@ -57,10 +46,10 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
         const prompt = `Does this resume match the keyword "${keyword}"? Answer only YES or NO.\n\nResume Content:\n${resumeText}`;
         console.log(prompt);
 
-        const result = await AIChatSession.sendMessage(prompt);
+        const result = await AIChatSession.sendMessage(prompt);    
         const output = (await result.response.text()).toLowerCase();
-        console.log(output);
-
+        console.log(output);      
+  
         if (output.includes('yes')) {
           matchedResumes.push(`http://localhost:1337/resumes/${file}`);
         }
