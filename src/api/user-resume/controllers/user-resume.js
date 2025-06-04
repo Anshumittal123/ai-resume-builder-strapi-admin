@@ -72,6 +72,19 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
       console.error("Resume filter error:", err);
       ctx.internalServerError("Failed to filter resumes");
     }
+  },
+
+  async getAllResumes(ctx) {
+    try {
+      const resumeFolder = path.join(__dirname, '../../../../public/resumes');
+      const files = fs.readdirSync(resumeFolder).filter(f => f.endsWith('.pdf') || f.endsWith('.doc') || f.endsWith('.docx'));
+  
+      const AllResume = files.map(file => `http://localhost:1337/resumes/${file}`);
+      ctx.send({ AllResume });
+    } catch (err) {
+      console.error("Get all resumes error:", err);
+      ctx.internalServerError("Failed to get resumes");
+    }
   }
 
 }));

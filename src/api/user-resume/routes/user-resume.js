@@ -14,6 +14,15 @@
 module.exports = {
   routes: [
     {
+      method: 'GET',
+      path: '/user-resume/get-all-resumes',
+      handler: 'user-resume.getAllResumes',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
       method: 'POST',
       path: '/filter-resumes',
       handler: 'user-resume.filterResumes',
