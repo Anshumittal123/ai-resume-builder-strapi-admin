@@ -19,7 +19,7 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
 
     try {
       const resumeFolder = path.join(__dirname, '../../../../public/resumes');
-      const files = fs.readdirSync(resumeFolder).filter(f => f.endsWith('.pdf') || f.endsWith('.doc') || f.endsWith('.docx')); //
+      const files = fs.readdirSync(resumeFolder).filter(f => f.endsWith('.pdf') || f.endsWith('.doc') || f.endsWith('.docx'));  
 
       const matchedResumes = [];
 
@@ -48,8 +48,8 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
 
         const result = await AIChatSession.sendMessage(prompt);    
         const output = (await result.response.text()).toLowerCase();
-        console.log(output);      
-  
+        console.log(output);
+
         if (output.includes('yes')) {
           matchedResumes.push(`http://localhost:1337/resumes/${file}`);
         }
