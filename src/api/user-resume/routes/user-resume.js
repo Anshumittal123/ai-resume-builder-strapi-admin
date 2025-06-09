@@ -31,7 +31,6 @@ module.exports = {
         middlewares: [],
       },
     },
-
     {
       method: 'GET',
       path: '/user-resumes',

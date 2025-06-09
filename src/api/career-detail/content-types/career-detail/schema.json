@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "career_details",
+  "info": {
+    "singularName": "career-detail",
+    "pluralName": "career-details",
+    "displayName": "Career-Details",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phoneNo": {
+      "type": "biginteger"
+    },
+    "designation": {
+      "type": "string"
+    },
+    "experience": {
+      "type": "integer"
+    },
+    "currentSalary": {
+      "type": "integer"
+    },
+    "expectedSalary": {
+      "type": "integer"
+    },
+    "education": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
+    },
+    "resume": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
