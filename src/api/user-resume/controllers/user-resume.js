@@ -183,21 +183,21 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
               });
               const dataBuffer = Buffer.from(response.data, 'binary');
               const pdfData = await pdfParse(dataBuffer);
-              console.log(`pdf data of Resume: ${pdfData}`);
+              // console.log(`pdf data of Resume: ${pdfData}`);
               resumeText = pdfData.text;
-              console.log(`Resume Text of Pdf type: ${resumeText}`);
+              // console.log(`Resume Text of Pdf type: ${resumeText}`);
             } catch (err) {
               console.error(`Failed to download or parse PDF: ${fileUrl}`, err.message);
               continue;
             }
           } else if (ext === '.docx') {
             const tempPath = path.join(__dirname, `${fileName}`);
-            console.log(`temp path of docx: ${tempPath}`);
+            // console.log(`temp path of docx: ${tempPath}`);
             fs.writeFileSync(tempPath, dataBuffer);
             const result = await mammoth.extractRawText({ path: tempPath });
-            console.log(`Docx Resume Data: ${result}`);
+            // console.log(`Docx Resume Data: ${result}`);
             resumeText = result.value;
-            console.log(`Resume Text of Docx type: ${resumeText}`);
+            // console.log(`Resume Text of Docx type: ${resumeText}`);
             fs.unlinkSync(tempPath);
           } else {
             continue;
@@ -220,9 +220,9 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
         const prompt = `You are an expert recruiter. For each of the following resumes, just return a JSON array of objects like this: [{"filename": "resume-name.pdf", "match": "yes"}, ...] depending on if it matches this keyword: "${keyword}"\n\n${chunk.map(d => `Resume: ${d.file}\n${d.resumeText}`).join('\n\n')}`;
 
         const result = await AIChatSession.sendMessage(prompt);
-        console.log(`result of ai: ${result}`);
+        // console.log(`result of ai: ${result}`);
         const outputText = await result.response.text();
-        console.log("AI response output:", outputText);
+        // console.log("AI response output:", outputText);
         let json = {};
 
         try {
