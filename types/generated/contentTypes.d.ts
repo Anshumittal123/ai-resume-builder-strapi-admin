@@ -23,7 +23,7 @@ export interface ApiCareerDetailCareerDetail
     expectedSalary: Schema.Attribute.Integer;
     education: Schema.Attribute.String;
     address: Schema.Attribute.Text;
-    resume: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    resume: Schema.Attribute.Media<'files'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

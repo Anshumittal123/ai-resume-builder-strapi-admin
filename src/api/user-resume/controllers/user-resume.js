@@ -192,17 +192,17 @@ module.exports = createCoreController('api::user-resume.user-resume', ({ strapi 
             }
           } else if (ext === '.docx') {
             const tempPath = path.join(__dirname, `${fileName}`);
-            // console.log(`temp path of docx: ${tempPath}`);
+            console.log(`temp path of docx: ${tempPath}`);
             fs.writeFileSync(tempPath, dataBuffer);
             const result = await mammoth.extractRawText({ path: tempPath });
             // console.log(`Docx Resume Data: ${result}`);
             resumeText = result.value;
-            // console.log(`Resume Text of Docx type: ${resumeText}`);
+            console.log(`Resume Text of Docx type: ${resumeText}`);
             fs.unlinkSync(tempPath);
           } else {
             continue;
           }
-          
+
 
           const cleanText = resumeText.replace(/\s+/g, ' ').trim().split(' ').slice(0, 1000).join(' ');
           resumeData.push({ file: fileName, resumeText: cleanText, fullUrl: fileUrl });
