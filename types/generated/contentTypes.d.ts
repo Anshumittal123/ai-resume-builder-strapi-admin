@@ -1,5 +1,78 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
+export interface ApiCareerDetailCareerDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'career_details';
+  info: {
+    singularName: 'career-detail';
+    pluralName: 'career-details';
+    displayName: 'Career-Details';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
+    email: Schema.Attribute.Email;
+    phoneNo: Schema.Attribute.BigInteger;
+    designation: Schema.Attribute.String;
+    experience: Schema.Attribute.Integer;
+    currentSalary: Schema.Attribute.Integer;
+    expectedSalary: Schema.Attribute.Integer;
+    education: Schema.Attribute.String;
+    address: Schema.Attribute.Text;
+    resume: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+  };
+}
+
+export interface ApiUserResumeUserResume extends Struct.CollectionTypeSchema {
+  collectionName: 'user_resumes';
+  info: {
+    singularName: 'user-resume';
+    pluralName: 'user-resumes';
+    displayName: 'User Resume';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    resumeId: Schema.Attribute.String;
+    userEmail: Schema.Attribute.Email;
+    userName: Schema.Attribute.String;
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
+    jobTitle: Schema.Attribute.String;
+    address: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    email: Schema.Attribute.String;
+    summary: Schema.Attribute.Text;
+    Experience: Schema.Attribute.Component<'experience.experience', true>;
+    Education: Schema.Attribute.Component<'education.education', true>;
+    Skills: Schema.Attribute.Component<'skills.skills', true>;
+    themeColor: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+  };
+}
+
 export interface PluginUploadFile extends Struct.CollectionTypeSchema {
   collectionName: 'files';
   info: {
@@ -445,79 +518,6 @@ export interface PluginUsersPermissionsUser
   };
 }
 
-export interface ApiCareerDetailCareerDetail
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'career_details';
-  info: {
-    singularName: 'career-detail';
-    pluralName: 'career-details';
-    displayName: 'Career-Details';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    firstName: Schema.Attribute.String;
-    lastName: Schema.Attribute.String;
-    email: Schema.Attribute.Email;
-    phoneNo: Schema.Attribute.BigInteger;
-    designation: Schema.Attribute.String;
-    experience: Schema.Attribute.Integer;
-    currentSalary: Schema.Attribute.Integer;
-    expectedSalary: Schema.Attribute.Integer;
-    education: Schema.Attribute.String;
-    address: Schema.Attribute.Text;
-    resume: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-  };
-}
-
-export interface ApiUserResumeUserResume extends Struct.CollectionTypeSchema {
-  collectionName: 'user_resumes';
-  info: {
-    singularName: 'user-resume';
-    pluralName: 'user-resumes';
-    displayName: 'User Resume';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    resumeId: Schema.Attribute.String;
-    userEmail: Schema.Attribute.Email;
-    userName: Schema.Attribute.String;
-    firstName: Schema.Attribute.String;
-    lastName: Schema.Attribute.String;
-    jobTitle: Schema.Attribute.String;
-    address: Schema.Attribute.String;
-    phone: Schema.Attribute.String;
-    email: Schema.Attribute.String;
-    summary: Schema.Attribute.Text;
-    Experience: Schema.Attribute.Component<'experience.experience', true>;
-    Education: Schema.Attribute.Component<'education.education', true>;
-    Skills: Schema.Attribute.Component<'skills.skills', true>;
-    themeColor: Schema.Attribute.String;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-  };
-}
-
 export interface AdminPermission extends Struct.CollectionTypeSchema {
   collectionName: 'admin_permissions';
   info: {
@@ -867,6 +867,8 @@ export interface AdminTransferTokenPermission
 declare module '@strapi/strapi' {
   export module Public {
     export interface ContentTypeSchemas {
+      'api::career-detail.career-detail': ApiCareerDetailCareerDetail;
+      'api::user-resume.user-resume': ApiUserResumeUserResume;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
@@ -877,8 +879,6 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::career-detail.career-detail': ApiCareerDetailCareerDetail;
-      'api::user-resume.user-resume': ApiUserResumeUserResume;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;
